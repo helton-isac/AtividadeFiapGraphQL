@@ -34,5 +34,23 @@ module.exports = {
         .then((snap) => snap.val())
         .then((val) => Object.keys(val).map((key) => val[key]));
     },
+    excluirProduto(_, { id }) {
+      const ref = admin.database().ref("produtos");
+      return ref
+        .orderByChild("id")
+        .equalTo(id)
+        .once("value")
+        .then((snap) => {
+          return snap.val();
+        })
+        .then((val) => {
+          if (val) {
+            var firstKey = Object.keys(val)[0];
+            var produtoExcluido = val[firstKey];
+            ref.child(firstKey).remove();
+            return produtoExcluido;
+          }
+        });
+    },
   },
 };
