@@ -3,11 +3,14 @@ const { ApolloServer, gql } = require("apollo-server-express");
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 
-const serviceAccount = require("./fiapbancographql-firebase-adminsdk-b531i-8746c847e2.json");
+// Initialize your secrets file based on secrets.template.js
+const secrets = require("./secrets");
+
+const serviceAccount = secrets.SERVICE_ACCOUNT;
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://fiapbancographql-default-rtdb.firebaseio.com/",
+  databaseURL: secrets.DATABASE_URL,
 });
 
 const typeDefs = gql`
