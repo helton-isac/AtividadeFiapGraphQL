@@ -1,0 +1,10 @@
+type Mutation {
+  novoProduto(
+    id: Int
+    nomeproduto: String
+    descricao: String
+    fornecedor: String
+    preco: Float
+    datacadastro: String
+  ): [Produto]
+}
