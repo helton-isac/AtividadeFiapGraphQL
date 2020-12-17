@@ -45,10 +45,39 @@ module.exports = {
         })
         .then((val) => {
           if (val) {
-            var firstKey = Object.keys(val)[0];
-            var produtoExcluido = val[firstKey];
+            const firstKey = Object.keys(val)[0];
+            const produtoExcluido = val[firstKey];
             ref.child(firstKey).remove();
             return produtoExcluido;
+          }
+        });
+    },
+    alterarProduto(
+      _,
+      { id, nomeproduto, descricao, fornecedor, preco, datacadastro }
+    ) {
+      const ref = admin.database().ref("produtos");
+      return ref
+        .orderByChild("id")
+        .equalTo(id)
+        .once("value")
+        .then((snap) => {
+          return snap.val();
+        })
+        .then((val) => {
+          if (val) {
+            const firstKey = Object.keys(val)[0];
+            let produtoAlterado = val[firstKey];
+            produtoAlterado.nomeproduto = nomeproduto;
+            produtoAlterado.descricao = descricao;
+            produtoAlterado.fornecedor = fornecedor;
+            produtoAlterado.preco = preco;
+            produtoAlterado.datacadastro = datacadastro;
+
+            console.log("produtoAlterado", produtoAlterado);
+
+            ref.child(firstKey).set(produtoAlterado);
+            return produtoAlterado;
           }
         });
     },

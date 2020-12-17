@@ -9,4 +9,13 @@ type Mutation {
   ): [Produto]
 
   excluirProduto(id: Int): Produto
+
+  alterarProduto(
+    id: Int
+    nomeproduto: String
+    descricao: String
+    fornecedor: String
+    preco: Float
+    datacadastro: String
+  ): Produto
 }
